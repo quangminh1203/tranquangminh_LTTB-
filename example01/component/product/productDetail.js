@@ -1,13 +1,12 @@
 // Productdetail
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Footer from '../home/footer';
 
 const Productdetail = ({ route }) => {
   const { item } = route.params;
   const navigation = useNavigation();
-  
 
   return (
     <View style={styles.container}>
@@ -15,13 +14,11 @@ const Productdetail = ({ route }) => {
         <Image style={styles.image} source={{ uri: item.image }} />
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.price}>{item.price} USD</Text>
-        <Button title="Thêm vào giỏ hàng" onPress={() => addToCart(item)} />
       </View>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
-      
-      <Footer  />
+      <Footer />
     </View>
   );
 };
@@ -53,7 +50,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 30,
+    top: 20,
     left: 10,
     padding: 10,
     zIndex: 1,

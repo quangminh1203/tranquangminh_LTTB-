@@ -81,16 +81,22 @@ const Body = () => {
 
   const totalPages = Math.ceil(products.length / productsPerPage);
 
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Categories</Text>
+    <ScrollView style={styles.container}>
+      
       <ScrollView horizontal>
         <Image source={require('../../assets/product/c1.png')} style={styles.image2} />
         <Image source={require('../../assets/product/c2.png')} style={styles.image2} />
         <Image source={require('../../assets/product/c3.png')} style={styles.image2} />
       </ScrollView>
       <Text style={styles.sectionTitle}>List Products</Text>
-      <ScrollView horizontal>{renderProducts}</ScrollView>
+      <ScrollView horizontal style={styles.prod}>{renderProducts}</ScrollView>
+      <Text style={styles.sectionTitle}>List Products</Text>
+      <ScrollView horizontal style={styles.prod}>{renderProducts}</ScrollView>
+      {/* <Text>///</Text>
+      <Text>///</Text>
+      <Text>///</Text> */}
       {/* Nút chuyển trang */}
       <View style={styles.pagination}>
         <Button
@@ -104,35 +110,50 @@ const Body = () => {
           onPress={() => setCurrentPage((prevPage) => (prevPage < totalPages ? prevPage + 1 : prevPage))}
           disabled={currentPage === totalPages} // Disable nút Next khi ở trang cuối
         />
+       
       </View>
-    </View>
+   
+      
+    </ScrollView>
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 100,
+    marginTop: 50,
+   
+    
   },
   sectionTitle: {
+    textAlign: 'center',
     fontSize: 20,
-    marginTop: 10,
+    top: 10,
+    left: 10,
+  },
+  prod:{
+    height: 350,
   },
   image: {
     width: 150,
     height: 190,
   },
   image2: {
-    width: 100,
-    height: 100,
-    marginTop: 10,
+    width: 80,
+    height: 80,
+    marginTop: 20,
     marginRight: 50,
+    left: 20, 
   },
   product: {
     alignItems: 'center',
     backgroundColor: '#808080',
     padding: 10,
     marginRight: 10,
+    height: 310,
+    top: 20,
+    
   },
   title: {
     fontSize: 18,
@@ -146,6 +167,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginVertical: 10,
+    position: 'absolute',
+    bottom: 1,
+    left: 0,
+    right: 0,
+  
+    
   },
 });
 

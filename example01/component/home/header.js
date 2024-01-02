@@ -23,9 +23,7 @@ function Header() {
           />
         </TouchableOpacity>
       </View>
-      <View style={styles.ar}>
-        <Text style={styles.txt1}>Tìm kiếm sản phẩm bạn mà bạn muốn</Text>
-      </View>
+   
     </View>
   );
 }

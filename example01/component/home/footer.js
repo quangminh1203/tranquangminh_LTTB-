@@ -45,18 +45,19 @@ function Footer() {
 
 const styles = StyleSheet.create({
   container: {
-    top: 762,
+    bottom: 0,
     backgroundColor: "white",
     width: "100%",
     height: 50,
     flex: 1,
     position: "absolute",
     justifyContent: "center",
-    alignItems: "center", // Căn giữa theo chiều ngang
+    alignItems: "center", 
     
   },
   cap: {
     flexDirection: "row",
+    left: 12,
   },
   menu: {
     flex: 1,
