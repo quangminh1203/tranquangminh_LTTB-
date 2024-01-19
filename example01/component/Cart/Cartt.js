@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image,TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Header from '../home/header';
-import Footer from '../home/footer';
+import { useNavigation } from "@react-navigation/native";
+import { useCart } from "./SaveCart";
+// import Header from './Header';
+// import Footer from './Footer';
 
 const Cart = () => {
     const [cart, setCart] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
   
     useEffect(() => {
       const fetchCart = async () => {
@@ -21,7 +24,8 @@ const Cart = () => {
   
       fetchCart();
     }, []);
-  
+    
+  //hàm tổng giá
     const handleIncreaseQuantity = async (itemId) => {
       try {
         const storedCart = await AsyncStorage.getItem('cart');
@@ -50,14 +54,24 @@ const Cart = () => {
         console.error('Lỗi khi xử lý giỏ hàng:', error);
       }
     };
+    
+    
+    
+    
+    
 
+    
     const removeDuplicateItems = (cart) => {
       console.log('Cart before removing duplicates:', cart);
       const uniqueCart = [...new Map(cart.map(item => [item.id, item])).values()];
       console.log('Unique Cart:', uniqueCart);
       return uniqueCart;
     };
-
+    
+    
+    
+    
+  
     const handleDecreaseQuantity = (itemId) => {
       const updatedCart = cart.map(item => {
         if (item.id === itemId && item.quantity > 1) {
@@ -71,7 +85,11 @@ const Cart = () => {
       setCart(updatedCart);
       AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
     };
-    
+
+ 
+    const removeFromCart = (item) => {
+      setCart((prevItems) => prevItems.filter((cart) => cart.id !== item.id));
+    };
   
     const handleClearCart = () => {
       setCart([]);
@@ -94,6 +112,16 @@ const Cart = () => {
         <TouchableOpacity onPress={() => handleIncreaseQuantity(item.id)}>
           <Text style={styles.quantityButton}>+</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+                  style={styles.ib1}
+                  onPress={() => removeFromCart(item)
+                  }
+                >
+                  <Image
+                    style={styles.ic}
+                    source={require("../../assets/screenns/trash-2.png")}
+                  ></Image>
+          </TouchableOpacity>
       </View>
     </View>
   </View>
@@ -105,10 +133,7 @@ const Cart = () => {
   
     return (
       <View style={styles.container}>
-        <View style={styles.ar}>
-            <Text style={styles.tc}>Giỏ hàng</Text>
-        </View>
-        
+      {/* <Header showBackButton={false} title="Shopping Cart" /> */}
       <FlatList
         contentContainerStyle={styles.flatListContent}
         data={cart}
@@ -119,11 +144,10 @@ const Cart = () => {
       <View style={styles.totalContainer}>
         <Text style={styles.totalText}>Total:</Text>
         <Text style={styles.totalAmount}>${totalAmount}</Text>
+        <Text style={styles.buttonText}>Thanh Toán</Text>
       </View>
-      <TouchableOpacity style={styles.clearButton} onPress={handleClearCart}>
-        <Text style={styles.clearButtonText}>Clear Cart</Text>
-      </TouchableOpacity>
-      
+     
+      {/* <Footer /> */}
     </View>
       );
     };
@@ -146,6 +170,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    marginTop: 10, // Thay đổi giá trị này nếu cần
     marginBottom: 6, // Thay đổi giá trị này nếu cần
   },
   productImage: {
@@ -164,13 +189,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#007BFF',
   },
-  clearButton: {
-    backgroundColor: '#ff5252', // Màu đỏ hoặc màu bạn muốn
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 16,
-    alignItems: 'center',
-  },
+ 
   clearButtonText: {
     color: '#fff',
     fontSize: 16,
@@ -213,10 +232,17 @@ const styles = StyleSheet.create({
   quantity: {
     fontSize: 16,
   },
-  tc:{
-    top: 20,
-    fontSize: 28,
-
+  buttonText: {
+    borderRadius: 5,
+    backgroundColor: '#b6d6ba',
+    color: "blue",
+    textAlign: "center",
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    fontSize: 16,
+    width: 100,
+    height: 30,
+    
   },
 });
 

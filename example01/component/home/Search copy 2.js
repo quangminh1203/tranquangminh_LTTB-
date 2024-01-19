@@ -3,9 +3,7 @@ import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from "react
 import { SearchBar } from "react-native-elements";
 import axios from "axios"; // Import the axios library
 import {GET_IMG } from "../Api/apiService";
-import { useNavigation } from "@react-navigation/native";
 function Sreach() {
-  const navigation = useNavigation();
   const [searchText, setSearchText] = useState(""); // State to store the search text
   const [searchResults, setSearchResults] = useState([]); // State to store search results
 
@@ -33,14 +31,13 @@ function Sreach() {
 
   return (
     <View style={styles.dau}>
-           
     <View style={styles.vo}>
       <View style={styles.container1}>
         <SearchBar
           placeholder="Tìm kiếm..."
           containerStyle={{
             backgroundColor: "#fff",
-            width: 400,
+            width: 350,
             borderBottomColor: "transparent",
             borderTopColor: "transparent",
           }}
@@ -53,16 +50,12 @@ function Sreach() {
           value={searchText} // Pass the state value as the value prop
         />
       </View>
-      <TouchableOpacity style={styles.ib}
-       onPress={handleSearchButtonPress}>
-        <Image
-        
-          style={styles.ic}
-          source={require("../../assets/screenns/sliders.png")}
-        ></Image>
+      <TouchableOpacity onPress={handleSearchButtonPress}>
+        <Text style={{ padding: 10, backgroundColor: "blue", color: "white" }}>Tìm kiếm</Text>
       </TouchableOpacity>
+      
     </View>
-          
+    <View>
      
         <FlatList
           data={searchResults}
@@ -94,7 +87,7 @@ function Sreach() {
         
           )}
         />
-  
+      </View>
     </View>
 
   );
@@ -102,20 +95,16 @@ function Sreach() {
 
 const styles = StyleSheet.create({
   dau: {
-    backgroundColor: "#fff",
-  },
-  ib: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: -70,
-  },
-  container1: {
-   
-
+    backgroundColor: "red",
+    // flexDirection: "column",
   },
   vo: {
     backgroundColor: "#FFF",
     flexDirection: "row",
+  },
+  container1: {
+    width: 300,
+    left: 25,
   },
   container: {
     width: 185,
@@ -135,8 +124,31 @@ const styles = StyleSheet.create({
     width: 185, // Điều chỉnh kích thước ảnh
     height: 258,
   },
-
-
+  container1: {
+    marginTop: 10,
+    height: 260,
+    width: 185, // Điều chỉnh kích thước của mỗi sản phẩm
+    backgroundColor: "#FFF",
+    marginLeft: 10,
+  },
+  container2: {
+    top: -15,
+    height: 260,
+    width: 185, // Điều chỉnh kích thước của mỗi sản phẩm
+    backgroundColor: "#FFF",
+    marginLeft: 10,
+  },
+  khungsp1: {
+    height: 218,
+    width: 185, // Điều chỉnh kích thước của mỗi sản phẩm
+    backgroundColor: "#ccc",
+    borderRadius: 15,
+    overflow: "hidden",
+  },
+  anh1: {
+    width: 185, // Điều chỉnh kích thước ảnh
+    height: 218,
+  },
   ten: {
     paddingTop: 4,
     fontSize: 16,
@@ -150,6 +162,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 20,
     top: -250,
+    left: 130,
+  },
+  kheart1: {
+    width: 40,
+    height: 40,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    top: -210,
     left: 130,
   },
   kchu: {

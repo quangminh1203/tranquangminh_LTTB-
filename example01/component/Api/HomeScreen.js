@@ -1,36 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, FlatList, StyleSheet,TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { getProducts } from '../Api/apiService';
+import Item from "./ItemHome";
+import { GET_ALL, GET_IMG } from "./apiService";
 const Product = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [effectExecuted, setEffectExecuted] = useState(false);
-
-  const navigation = useNavigation();
+  const [coffeeData, setCoffeeData] = useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Lấy danh sách categories
-      
-
-        // Lấy danh sách sản phẩm
-        const responseProducts = await fetch('https://fakestoreapi.com/products');
-        const productsData = await responseProducts.json();
-        setProducts(productsData);
-      } catch (error) {
-        console.error('Lỗi khi lấy dữ liệu:', error);
-      }
-    };
-
-    fetchData();
+    // Use the GET_ALL function to fetch data from your API
+    GET_ALL("products")
+      .then((response) => {
+        const responseData = response.data;
+        if (responseData && Array.isArray(responseData.content)) {
+          setCoffeeData(responseData.content); // Update the state with the "content" array
+        } else {
+          console.error(
+            "Data received from the API is not in a supported format."
+          );
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setIsLoading(false);
+      });
   }, []);
-  
-  console.log('useEffect đã được thực thi:', effectExecuted);
-
   return (
     <FlatList
-      data={products}
+      data={coffeeData}
       numColumns={2}
       renderItem={({ item }) => {
         let content;
@@ -39,13 +35,11 @@ const Product = () => {
           content = (
             <TouchableOpacity
               style={styles.gg1}
-              onPress={() => {
-                navigation.navigate("ProductDetail", { item}); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
-              }}
+              
             >
               <View style={styles.container}>
                 <View style={styles.khungsp}>
-                <Image style={styles.image} source={{ uri: item.image }} />
+                  <Image style={styles.anh} source={{ uri: GET_IMG("products", item.photo)}} />
                 </View>
                 <View style={styles.kheart}>
                   <Image
@@ -55,7 +49,7 @@ const Product = () => {
                 </View>
                 <View style={styles.kchu}>
                   <Text style={styles.ten}>{item.title}</Text>
-                  <Text>{item.price} </Text>
+                  <Text>{item.price} ee1</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -67,12 +61,12 @@ const Product = () => {
             <TouchableOpacity
             style={styles.gg1}
             onPress={() => {
-              navigation.navigate("ProductDetail", {item}); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
+              navigation.navigate("ProductDetail", { item}); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
             }}
           >
                 <View style={styles.container1}>
               <View style={styles.khungsp1}>
-              <Image style={styles.image} source={{ uri: item.image }} />
+                <Image style={styles.anh1} source={{ uri: item.photo }} />
               </View>
               <View style={styles.kheart1}>
                 <Image
@@ -82,7 +76,7 @@ const Product = () => {
               </View>
               <View style={styles.kchu}>
                 <Text style={styles.ten}>{item.title}</Text>
-                <Text>{item.price} </Text>
+                <Text>{item.price} ee222</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -100,7 +94,7 @@ const Product = () => {
           >
              <View style={styles.container2}>
               <View style={styles.khungsp1}>
-              <Image style={styles.image} source={{ uri: item.image }} />
+                <Image style={styles.anh1} source={{ uri: item.photo }} />
               </View>
               <View style={styles.kheart1}>
                 <Image
@@ -139,7 +133,6 @@ const styles = StyleSheet.create({
     width: 185,
     height: 310,
     marginTop: 10,
-    marginLeft:10,
     backgroundColor: "#fff",
   },
   khungsp: {
@@ -149,7 +142,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "#ccc",
   },
-  image: {
+  anh: {
     width: 185, // Điều chỉnh kích thước ảnh
     height: 258,
   },
@@ -205,7 +198,8 @@ const styles = StyleSheet.create({
   },
   kchu: {
     top: -40,
-  },
+    height:140
+  }
 });
 
 export default Product;
