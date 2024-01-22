@@ -9,23 +9,35 @@ import {
   ScrollView,
 } from "react-native";
 import MenuHome from "./MenuHome";
-import Sreach1 from "./Search1";
+import Search from "./Search";
 import Product from "./Product";
 import Headerr from "./Headerr";
+import Slider from "./Slider";
+import Category from "./Category"
 
 const HomePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.search}>
         <Headerr />
-        <Sreach1 />
+        <Search/>
       </View>
-      <View style={styles.productsContainer}>
-        <Product />
-      </View>
-      <View style={styles.menu}>
-        <MenuHome />
-      </View>
+          <ScrollView>
+            <View style={styles.slider}>
+            <Slider/>
+            
+            </View>
+            <View style={styles.productsContainer}>
+              <Product />
+            </View>
+
+
+            
+          </ScrollView>
+          <View style={styles.menu}>
+              <MenuHome />
+            </View>
+
     </View>
   );
 };
@@ -54,9 +66,14 @@ const styles = StyleSheet.create({
   productsContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    top: -5,
+    top: 5,
     paddingBottom: 50,
   },
+  slider:{
+    width: '100%',
+
+  },
+
 });
 
 export default HomePage;

@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image,TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
-import { useCart } from "./SaveCart";
-// import Header from './Header';
+// import Header from './Headerr';
 // import Footer from './Footer';
 
-const Cart = () => {
+const Cart = ({navigation}) => {
     const [cart, setCart] = useState([]);
     const [cartItems, setCartItems] = useState([]);
   
@@ -90,10 +89,14 @@ const Cart = () => {
     const removeFromCart = (item) => {
       setCart((prevItems) => prevItems.filter((cart) => cart.id !== item.id));
     };
-  
-    const handleClearCart = () => {
-      setCart([]);
-      AsyncStorage.removeItem('cart');
+
+
+     // Function to navigate to the "Payment"
+     const handlePayment = async () => {
+      // Chuyển hướng đến trang Payment
+      navigation.navigate("Payment");
+   
+      await clearCart();
     };
   
     const renderCartItem = ({ item }) => (
@@ -144,8 +147,19 @@ const Cart = () => {
       <View style={styles.totalContainer}>
         <Text style={styles.totalText}>Total:</Text>
         <Text style={styles.totalAmount}>${totalAmount}</Text>
-        <Text style={styles.buttonText}>Thanh Toán</Text>
-      </View>
+
+        <TouchableOpacity
+        style={styles.btn}
+        onPress={handlePayment}
+      >
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>Thanh toán</Text>
+        </View>
+    
+      </TouchableOpacity>
+        
+              
+        </View>
      
       {/* <Footer /> */}
     </View>

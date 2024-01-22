@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,55 +11,51 @@ import {
   Animated,
   Easing
 } from "react-native";
-import axios from 'axios';
 import { useNavigation } from "@react-navigation/native";
-import { useAuth } from "./AuthContext ";
-const apiUrl = 'https://fakestoreapi.com/user';
-function LoginScreen() {
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+const Login = () => {
   const navigation = useNavigation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [fadeAnim] = useState(new Animated.Value(0));
-  useEffect(() => {
-  const startAnimationTimeout = setTimeout(() => { Animated.timing(fadeAnim, {
+//
+const startAnimationTimeout = setTimeout(() => { Animated.timing(fadeAnim, {
   toValue: 1,
   duration: 1000,
   easing: Easing.linear,
   useNativeDriver: true,
   }).start();
   }, 500);
-  return () => clearTimeout(startAnimationTimeout)
-  }, []);
-  const { login } = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     try {
-      console.log('Attempting login with:', username, password);
+      if (username !== "" && password !== "") {
+        const response = await fetch("https://fakestoreapi.com/users");
+        const users = await response.json();
 
-      const response = await axios.get(apiUrl); // Gửi yêu cầu GET để lấy thông tin từ API
-      console.log('API response:', response);
+        const user = users.find(
+          (u) => u.username === username && u.password === password
+        );
 
-      // Kiểm tra xem thông tin đăng nhập có tồn tại trong dữ liệu API hay không
-      const user = response.data.content.find((user) => user.tk === username && user.mk === password);
-      console.log('User found:', user);
+        if (user) {
+          // Lưu trạng thái đăng nhập vào AsyncStorage
+          await AsyncStorage.setItem("isLoggedIn", "true");
 
-      if (user) {
-        // Đăng nhập thành công, bạn có thể lưu token vào Redux hoặc AsyncStorage
-        // Sau đó chuyển đến màn hình chính
-        login(user);
-        Alert.alert('Thông báo', 'Đăng nhập thành công');
-        
-        navigation.navigate('HomePage');
+          // Chuyển hướng đến màn hình Home
+          navigation.navigate("HomePage");
+        } else {
+          Alert.alert("Đăng nhập sai!!");
+        }
       } else {
-        // Đăng nhập thất bại, hiển thị thông báo lỗi
-        Alert.alert('Thông báo', 'Tên người dùng hoặc mật khẩu không đúng');
+        Alert.alert("Vui lòng nhập tài khoản và mật khẩu");
       }
     } catch (error) {
-      // Xử lý lỗi kết nối đến API
-      console.error('Error during login:', error);
-      Alert.alert('Thông báo', 'Đã xảy ra lỗi khi kết nối đến máy chủ');
+      console.error("Error fetching user data", error);
+      Alert.alert("Đã xảy ra lỗi khi đăng nhập");
     }
   };
+
   return (
     <Animated.View style={[styles.cap,{opacity:fadeAnim}]}>
       <View style={styles.img1}>
@@ -78,7 +74,7 @@ function LoginScreen() {
         </View>
       </View>
       <View style={styles.img4}>
-        <Text style={styles.login}>Đăng nhập</Text>
+        <Text style={styles.login}>Login</Text>
         <View style={styles.texta}>
           <Text style={styles.mauchu}>Email</Text>
           <TextInput
@@ -132,15 +128,9 @@ function LoginScreen() {
       <TouchableOpacity
         style={styles.btn}
         onPress={handleLogin}
-        //login bang click
-        // style={styles.btn}
-        // onPress={() => {
-        //   navigation.navigate("HomePage"); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
-        // }}
-        
       >
         <View style={styles.button}>
-          <Text style={styles.buttonText}>Đăng nhập</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </View>
     
       </TouchableOpacity>
@@ -269,4 +259,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default Login;

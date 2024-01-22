@@ -26,7 +26,7 @@ function MenuHome() {
         </TouchableOpacity>
         <TouchableOpacity style={styles.menu}
            onPress={() => {
-            navigation.navigate("RegisterScreen"); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
+            navigation.navigate("Searchread"); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
           }}>
           <Image
             style={styles.ic}
@@ -47,7 +47,7 @@ function MenuHome() {
         </TouchableOpacity>
         <TouchableOpacity style={styles.menu}
           onPress={() => {
-            navigation.navigate("Cartt"); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
+            navigation.navigate("profile"); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
           }}>
           <Image
             style={styles.ic}

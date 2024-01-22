@@ -7,7 +7,7 @@ const Product = () => {
   useEffect(() => {
     // Gọi API để lấy danh sách sản phẩ
     // fetch("https://api.npoint.io/4074693582e2d75c418b")
-    fetch("http://192.168.106.68:8080/api/products")
+    fetch( "http://192.168.1.7:8080/api/products")
       .then((response) => response.json())
       .then((data) => setProducts(data.content))
       .catch((error) => console.error("Lỗi khi lấy dữ liệu sản phẩm:", error));

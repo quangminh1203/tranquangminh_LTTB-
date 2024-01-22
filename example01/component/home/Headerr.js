@@ -35,7 +35,6 @@ function Headerr() {
 }
 const styles = StyleSheet.create({
   vo: {
-    backgroundColor: "#FFF",
     flexDirection: "row",
   },
   container: {

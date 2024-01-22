@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, FlatList, StyleSheet,TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, FlatList, StyleSheet,TouchableOpacity, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getProducts } from '../Api/apiService';
 const Product = () => {
@@ -9,7 +9,7 @@ const Product = () => {
   const [categories, setCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [ setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
 
 
@@ -48,106 +48,89 @@ const handleSearch = (searchTerm) => {
 
   setFilteredProducts(filtered);
 };
-///
 
-  const filteredProducts = products.filter(
-    (item) =>
-       (!currentCategory || item.category === currentCategory) &&
-       item.title.toLowerCase().includes(searchQuery.toLowerCase())
- );
+
 
 
   return (
     <View>
-      <Text style={styles.sectionTitle}>Danh mục</Text>
-       <ScrollView horizontal>
-              {/* Nút hiển thị tất cả */}
-              <TouchableOpacity
-                style={[styles.categoryButton, styles.showAllButton]}
-                onPress={() => {
-                  setCurrentCategory(null);
-                  setSearchQuery('');
-                }}
-              >
-                <Text style={{ color: 'black' }}>All</Text>
-         </TouchableOpacity>
-
-        {/* Danh sách các nút category */}
-        {categories.map((category) => (
-          <TouchableOpacity
-            key={category}
-            onPress={() => setCurrentCategory(category)}
-            style={[
-              styles.categoryButton,
-              { backgroundColor: currentCategory === category ? '#007BFF' : '#ddd' },
-            ]}>
-            <Text style={{ color: currentCategory === category ? 'white' : 'black' }}>{category}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      <Text style={styles.ttk}>TÌM KIẾM SẢN PHẨM</Text>
+      <View style={styles.searchContainer}>
+        {/* Thêm ô tìm kiếm */}
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Tìm kiếm sản phẩm..."
+         
+          onChangeText={(text) => handleSearch(text)}
+          value={searchQuery}
+        />
+      </View>
 
             
       
 
-    <Text style={styles.allpro}>SẢN PHẨM</Text>
-    
+ 
+    <View style={styles.pro}>
     <FlatList
       data={filteredProducts}
       numColumns={2}
       renderItem={({ item }) => {
         let content;
+        
         if (item.id % 2 !== 0) {
           // Nếu item.id là số chẵn
           content = (
-            <TouchableOpacity
-              style={styles.gg1}
-              onPress={() => {
-                navigation.navigate("ProductDetail", { item}); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
-              }}
-            >
-              <View style={styles.container}>
-                <View style={styles.khungsp}>
-                <Image style={styles.image} source={{ uri: item.image }} />
+            
+                <TouchableOpacity
+                  style={styles.gg1}
+                  onPress={() => {
+                    navigation.navigate("ProductDetail", { item}); 
+                  }}
+                >
+                  <View style={styles.container}>
+                    <View style={styles.khungsp}>
+                    <Image style={styles.image} source={{ uri: item.image }} />
+                    </View>
+                    <View style={styles.kheart}>
+                      <Image
+                        style={styles.heart}
+                        source={require("../../assets/screenns/heart.png")}
+                      />
+                    </View>
+                    <View style={styles.kchu}>
+                      <Text style={styles.ten}>{item.title}</Text>
+                      <Text>{item.price} </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            }
+            if (item.id % 2 === 0 && item.id == 2) {
+              // Nếu item.id là số chẵn
+              content = (
+                <TouchableOpacity
+                style={styles.gg1}
+                onPress={() => {
+                  navigation.navigate("ProductDetail", {item}); 
+                }}
+              >
+                    <View style={styles.container1}>
+                  <View style={styles.khungsp1}>
+                  <Image style={styles.image} source={{ uri: item.image }} />
+                  </View>
+                  <View style={styles.kheart1}>
+                    <Image
+                      style={styles.heart}
+                      source={require("../../assets/screenns/heart.png")}
+                    />
+                  </View>
+                  <View style={styles.kchu}>
+                    <Text style={styles.ten}>{item.title}</Text>
+                    <Text>{item.price} </Text>
+                  </View>
                 </View>
-                <View style={styles.kheart}>
-                  <Image
-                    style={styles.heart}
-                    source={require("../../assets/screenns/heart.png")}
-                  />
-                </View>
-                <View style={styles.kchu}>
-                  <Text style={styles.ten}>{item.title}</Text>
-                  <Text>{item.price} </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          );
-        }
-        if (item.id % 2 === 0 && item.id == 2) {
-          // Nếu item.id là số chẵn
-          content = (
-            <TouchableOpacity
-            style={styles.gg1}
-            onPress={() => {
-              navigation.navigate("ProductDetail", {item}); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
-            }}
-          >
-                <View style={styles.container1}>
-              <View style={styles.khungsp1}>
-              <Image style={styles.image} source={{ uri: item.image }} />
-              </View>
-              <View style={styles.kheart1}>
-                <Image
-                  style={styles.heart}
-                  source={require("../../assets/screenns/heart.png")}
-                />
-              </View>
-              <View style={styles.kchu}>
-                <Text style={styles.ten}>{item.title}</Text>
-                <Text>{item.price} </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+              </TouchableOpacity>
+          
        
           );
         }
@@ -157,7 +140,7 @@ const handleSearch = (searchTerm) => {
             <TouchableOpacity
             style={styles.gg1}
             onPress={() => {
-              navigation.navigate("ProductDetail", { item}); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
+              navigation.navigate("ProductDetail", { item}); 
             }}
           >
              <View style={styles.container2}>
@@ -184,6 +167,7 @@ const handleSearch = (searchTerm) => {
       }}
     />
     </View>
+    </View>
   );
 };
 
@@ -198,22 +182,24 @@ const styles = StyleSheet.create({
     flexWrap: "wrap", // Cho phép các sản phẩm xuống hàng mới khi không đủ không gian
     marginRight: 5,
   },
-  sectionTitle: {
+  ttk:{
+    top:25,
     fontSize: 20,
-    marginTop: 10,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
-  categoryButton: {
-    padding: 10,
-    margin: 5,
-    textAlign:'center',
-    borderRadius: 5,
+  searchInput: {
+    top:40,
+    height: 40,
+    borderRadius: 10,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingLeft: 10,
   },
-  showAllButton: {
-    marginRight: 10,
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    backgroundColor:'#ddd',
+
+  pro:{
+    top: 60,
+
   },
   container: {
     width: 185,

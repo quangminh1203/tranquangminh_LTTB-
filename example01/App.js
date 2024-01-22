@@ -10,9 +10,11 @@ import Cartt from "./component/Cart/Cartt";
 import CartSuccess from "./component/Cart/CartSuccess";
 import CheckOut from "./component/Cart/CheckOut";
 import { CartProvider } from "./component/Cart/SaveCart";
-import HomePage1 from "./component/Home/HomePage1";
 import { AuthProvider } from "./component/Login/AuthContext ";
 import LottieView from 'lottie-react-native';
+import Profile from "./component/Home/profile";
+import Searchread from "./component/Home/Searchread";
+import Payment from "./component/Cart/Payment";
 function App() {
   const Stack = createStackNavigator();
   return (
@@ -21,7 +23,7 @@ function App() {
           <CartProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home122">
-          <Stack.Screen
+          {/* <Stack.Screen
             name="LoginStart"
             component={LoginStart}
             options={{ headerShown: false }}
@@ -35,17 +37,13 @@ function App() {
             name="RegisterScreen"
             component={RegisterScreen}
             options={{ headerShown: false }}
-          />
+          /> */}
           <Stack.Screen
             name="HomePage"
             component={HomePage}
             options={{ headerShown: false }}
           />
-               <Stack.Screen
-            name="HomePage1"
-            component={HomePage1}
-            options={{ headerShown: false }}
-          />
+              
           <Stack.Screen
             name="ProductDetail"
             component={ProductDetail}
@@ -66,6 +64,23 @@ function App() {
             component={CartSuccess}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={{ headerShown: false }}
+          />
+            <Stack.Screen
+            name="Searchread"
+            component={Searchread}
+            options={{ headerShown: false }}
+          />
+            <Stack.Screen
+          name="Payment"
+          component={Payment}
+          options={{
+            headerTitleStyle: { color: "red" },
+          }}
+        />
         </Stack.Navigator>
       </NavigationContainer>
     </CartProvider>
