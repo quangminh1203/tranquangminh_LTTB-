@@ -74,7 +74,7 @@ const startAnimationTimeout = setTimeout(() => { Animated.timing(fadeAnim, {
         </View>
       </View>
       <View style={styles.img4}>
-        <Text style={styles.login}>Login</Text>
+        <Text style={styles.login}>Đăng nhập</Text>
         <View style={styles.texta}>
           <Text style={styles.mauchu}>Email</Text>
           <TextInput
@@ -121,7 +121,7 @@ const startAnimationTimeout = setTimeout(() => { Animated.timing(fadeAnim, {
           navigation.navigate("RegisterScreen"); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
         }}
       >
-       <Text style={styles.test2}>Register</Text>
+       <Text style={styles.test2}>Đăng ký</Text>
       </TouchableOpacity>
         
       </View>
@@ -130,7 +130,7 @@ const startAnimationTimeout = setTimeout(() => { Animated.timing(fadeAnim, {
         onPress={handleLogin}
       >
         <View style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Đăng nhập</Text>
         </View>
     
       </TouchableOpacity>

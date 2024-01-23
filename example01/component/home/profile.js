@@ -12,6 +12,7 @@ const Profile = () => {
     // Add logic to navigate to the edit profile screen
     console.log("Navigate to edit profile");
   };
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>

@@ -15,6 +15,7 @@ import LottieView from 'lottie-react-native';
 import Profile from "./component/Home/profile";
 import Searchread from "./component/Home/Searchread";
 import Payment from "./component/Cart/Payment";
+import Map from "./component/Home/Map";
 function App() {
   const Stack = createStackNavigator();
   return (
@@ -81,6 +82,13 @@ function App() {
             headerTitleStyle: { color: "red" },
           }}
         />
+         {/* <Stack.Screen
+          name="Map"
+          component={Map}
+          options={{
+            headerTitleStyle: { color: "red" },
+          }}
+        /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </CartProvider>

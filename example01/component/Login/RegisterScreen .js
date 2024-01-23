@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import axios from 'axios';
 
-const apiUrl = 'http://192.168.1.6:8080/api/user';
+const apiUrl = 'http://192.168.1.7:8080/api/user';
 import { useNavigation } from "@react-navigation/native";
 
 function RegisterScreen() {

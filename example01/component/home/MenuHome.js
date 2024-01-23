@@ -37,13 +37,13 @@ function MenuHome() {
 
         <TouchableOpacity style={styles.menu}
           onPress={() => {
-            navigation.navigate("RegisterScreen"); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
+            navigation.navigate("Map"); // Chuyển đến trang chủ khi nhấn vào nút "Continue Shopping"
           }}>
           <Image
             style={styles.ic}
-            source={require("../../assets/screenns/heart.png")}
+            source={require("../../assets/screenns/images.png")}
           ></Image>
-          <Text style={styles.txt}>Liked</Text>
+          <Text style={styles.txt}>Maps</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.menu}
           onPress={() => {

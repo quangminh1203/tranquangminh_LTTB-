@@ -20,7 +20,7 @@ const Cart = ({navigation}) => {
           console.error('Lỗi khi lấy dữ liệu giỏ hàng:', error);
         }
       };
-  
+    
       fetchCart();
     }, []);
     
@@ -48,7 +48,7 @@ const Cart = ({navigation}) => {
         console.log('Updated Cart:', updatedCart);
     
         await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
-        setCart(updatedCart);
+        setCart(updatedCart); // Cập nhật state khi lưu giỏ hàng vào AsyncStorage
       } catch (error) {
         console.error('Lỗi khi xử lý giỏ hàng:', error);
       }
@@ -86,17 +86,28 @@ const Cart = ({navigation}) => {
     };
 
  
-    const removeFromCart = (item) => {
-      setCart((prevItems) => prevItems.filter((cart) => cart.id !== item.id));
+    const removeFromCart = async (item) => {
+      try {
+        setCart((prevItems) => prevItems.filter((cart) => cart.id !== item.id));
+        await AsyncStorage.setItem('cart', JSON.stringify(cart)); // Lưu giỏ hàng mới vào AsyncStorage sau khi xóa
+      } catch (error) {
+        console.error('Lỗi khi xử lý giỏ hàng:', error);
+      }
     };
 
+   
+    const ClearCart = () => {
+      setCart([]);
+      AsyncStorage.removeItem('cart');
+    };
 
      // Function to navigate to the "Payment"
      const handlePayment = async () => {
       // Chuyển hướng đến trang Payment
-      navigation.navigate("Payment");
+      
    
-      await clearCart();
+      await ClearCart();
+      navigation.navigate("Payment");
     };
   
     const renderCartItem = ({ item }) => (
